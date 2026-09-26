@@ -27,3 +27,31 @@ Draft compliant government content with verifiable sources for human approval.
 - `POST /drafts`: Create a new draft.
 - `GET /drafts`: List all drafts.
 - `POST /drafts/{id}/approve`: Approve a draft.
+
+## Architecture
+
+![Architecture](docs/architecture.png)
+
+<details>
+<summary>Mermaid source</summary>
+
+```mermaid
+flowchart LR
+    A[Identify Outdated Info] --> B[Retrieve Source Records]
+    B --> C[Generate Draft Content]
+    C --> D[Human Review]
+    D --> E{Approved?}
+    E -->|Yes| F[Publish Content]
+    E -->|No| A
+    subgraph Backend
+        G[FastAPI]
+        H[SQLite Audit Log]
+        I[Simulated LLM]
+        J[Simulated Vector DB]
+    end
+    G --> H
+    G --> I
+    G --> J
+```
+
+</details>

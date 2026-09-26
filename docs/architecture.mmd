@@ -1,0 +1,16 @@
+flowchart LR
+    A[Identify Outdated Info] --> B[Retrieve Source Records]
+    B --> C[Generate Draft Content]
+    C --> D[Human Review]
+    D --> E{Approved?}
+    E -->|Yes| F[Publish Content]
+    E -->|No| A
+    subgraph Backend
+        G[FastAPI]
+        H[SQLite Audit Log]
+        I[Simulated LLM]
+        J[Simulated Vector DB]
+    end
+    G --> H
+    G --> I
+    G --> J
